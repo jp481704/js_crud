@@ -2,9 +2,12 @@ selectedRow = null;
 
 document.querySelector("#list").addEventListener("click",(e)=>{
     const target = e.target;
+    let mess;
     if(target.classList.contains("delete")){
-        target.closest("tr").remove();
-    alert("Delete")
+        const mess = confirm("Are You Sure?");
+        if(mess){
+            target.closest("tr").remove();   
+        }
     }
 })
 
@@ -18,10 +21,31 @@ document.querySelector("#main-form"),addEventListener("submit",(e) =>{
     const age = document.getElementById("age").value;
 
 
-    if(selectedRow == null){
-        const list =  document.querySelector("#list");
-        const row = document.createElement("tr");
+  let nameError =  document.getElementById("nameError");
+   nameError.innerHTML = "";
 
+   let numberError = document.getElementById("numberError");
+   numberError.innerHTML = "";
+
+   let emailError = document.getElementById("emailError");
+   emailError.innerHTML= ""
+
+   let ageError = document.getElementById("ageError");
+   ageError.innerHTML = ""
+   
+
+  if(name == "" || email == "" || number == "" || age == ""){
+    nameError.innerHTML= "Enter your Name ";
+    numberError.innerHTML= "Enter your Number";
+    emailError.innerHTML= "Enter your Email";
+    ageError.innerHTML= "Enter your Age";
+    return;
+  }
+  
+
+    if(selectedRow == null || name == ""){
+        const list =  document.querySelector("#list");
+        const row = document.createElement("tr");        
         row.innerHTML = `
         <td>${name}</td>
         <td>${email}</td>
@@ -44,7 +68,7 @@ document.querySelector("#main-form"),addEventListener("submit",(e) =>{
         selectedRow.children[3].textContent = age;
         selectedRow = null;
         document.getElementById("main-form").reset();
-
+ nameError = ""
     }
 
 })
